@@ -51,4 +51,3 @@ jobs:
       - name: Pull and run Backend Image
         run: |
           docker run -d -p 8081:3000 ${{ secrets.DOCKERHUB_USERNAME }}/crucigrama-backend:latest
-
