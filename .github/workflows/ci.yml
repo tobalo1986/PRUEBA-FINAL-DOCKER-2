@@ -23,7 +23,7 @@ jobs:
       - name: Log in to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Frontend Image
@@ -31,14 +31,14 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/crossword-frontend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/crossword-frontend:latest
 
       - name: Build and push Backend Image
         uses: docker/build-push-action@v2
         with:
           context: ./backend
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/crossword-backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/crossword-backend:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,8 +47,8 @@ jobs:
     steps:
       - name: Pull and run Frontend Image
         run: |
-          docker run -d -p 8080:80 ${{ secrets.DOCKER_USERNAME }}/crossword-frontend:latest
+          docker run -d -p 8080:80 ${{ secrets.DOCKERHUB_USERNAME }}/crossword-frontend:latest
           
       - name: Pull and run Backend Image
         run: |
-          docker run -d -p 8081:3000 ${{ secrets.DOCKER_USERNAME }}/crossword-backend:latest
+          docker run -d -p 8081:3000 ${{ secrets.DOCKERHUB_USERNAME }}/crossword-backend:latest
